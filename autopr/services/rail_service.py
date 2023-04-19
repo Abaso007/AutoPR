@@ -65,18 +65,22 @@ class RailService:
                   dict_output=dict_o)
 
         if dict_o is None:
-            log.warning(f'Got None from rail',
-                        rail_object=rail_object.__name__,
-                        raw_output=raw_o)
+            log.warning(
+                'Got None from rail',
+                rail_object=rail_object.__name__,
+                raw_output=raw_o,
+            )
             return None
 
         try:
             return rail_object.parse_obj(dict_o)
         except pydantic.ValidationError:
-            log.warning(f'Got invalid output from rail',
-                        rail_object=rail_object.__name__,
-                        raw_output=raw_o,
-                        dict_output=dict_o)
+            log.warning(
+                'Got invalid output from rail',
+                rail_object=rail_object.__name__,
+                raw_output=raw_o,
+                dict_output=dict_o,
+            )
         return None
 
     def run_prompt_rail(self, rail: PromptRail) -> Optional[RailObject]:

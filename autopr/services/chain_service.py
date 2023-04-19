@@ -105,10 +105,7 @@ class ChainService:
             return self.model(template.to_string())
 
     def run_chain(self, chain: PromptChain) -> Any:
-        if chain.output_parser:
-            parser = chain.output_parser()
-        else:
-            parser = None
+        parser = chain.output_parser() if chain.output_parser else None
         prompt_value = self._get_model_template(chain, parser)
         self.log.info("Running chain", prompt=prompt_value.to_string())
         output = self._run_model(prompt_value)

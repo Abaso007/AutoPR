@@ -30,8 +30,7 @@ class GithubPublishService(PublishService):
         }
 
     def publish(self, pr: PullRequestDescription):
-        existing_pr = self._find_existing_pr()
-        if existing_pr:
+        if existing_pr := self._find_existing_pr():
             self.update(pr)
         else:
             self._create_pr(pr)
@@ -78,8 +77,7 @@ class GithubPublishService(PublishService):
         response = requests.get(url, headers=headers, params=params)
 
         if response.status_code == 200:
-            prs = response.json()
-            if prs:
+            if prs := response.json():
                 return prs[0]  # Return the first pull request found
         else:
             log.debug('Failed to get pull requests', response_text=response.text)
